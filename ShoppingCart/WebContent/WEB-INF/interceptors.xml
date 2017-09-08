@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 	
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 	
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd    
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd    
+        http://www.springframework.org/schema/tx
+	 	http://www.springframework.org/schema/tx/spring-tx.xsd
+	 	http://www.springframework.org/schema/aop
+    	http://www.springframework.org/schema/aop/spring-aop.xsd         	  
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        ">
+
+	<context:component-scan base-package="com.oguzhanmangir.shoppingcart" />
+	<mvc:annotation-driven enable-matrix-variables="true"/>
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:annotation-driven />
+	<context:annotation-config />
+	
+	<!-- for aspect annotation -->
+	<aop:aspectj-autoproxy />
+
+
+	<!-- for language (Turkish(tr) or English(en) ) -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="tr" />
+	</bean>
+
+
+	<!-- 
+			interceptors for language paramName = language.
+		 	for example -> /language?tr
+	-->
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
+	
+</beans>
